@@ -1,2 +1,2 @@
-var_Key = "RGAPI-74408972-2c3d-4df7-87d2-5b16a9a22844"
+var_Key = "RGAPI-207e5cee-9213-4e84-aabb-6f8239eaa792"
 var_BR1 = "br1.api.riotgames.com"
