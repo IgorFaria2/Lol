@@ -60,18 +60,16 @@ from Functions.Get_history import History
 app = Flask(__name__)
 
 # Route for the root URL ("/")
-@app.route("/", methods=["GET", "POST"])
+@app.route("/nome", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
         summoner_name = request.form["summoner_name"]
+        # Call the functions to retrieve data and history
+        data_json, response_data = data(summoner_name, var_BR1, var_Key)
+        count_history = 1
+        history_array = History(data_json, var_Key, count_history)
 
-        if summoner_name != "":
-            # Call the functions to retrieve data and history
-            data_json, response_data = data(summoner_name, var_BR1, var_Key)
-            count_history = 1
-            history_array = History(data_json, var_Key, count_history)
-
-            return jsonify(history_array)
+        return jsonify(history_array)
 
     return render_template("index.html")
 

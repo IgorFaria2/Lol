@@ -3,7 +3,7 @@
 <body>
     <h2>Nick BR1:</h2>
     <form action="/" method="POST">
-        <input type="text" name="summoner_name">
+        <input type="text" name="summoner_name" required>
         <input type="submit" value="Submit">
     </form>
 
@@ -21,10 +21,11 @@
                 // Send an AJAX request to the backend
                 $.ajax({
                     type: "POST",
-                    url: "/",
+                    url: "/nome",
                     data: { summoner_name: summonerName },
                     success: function(response) {
                         // Update the history container with the received JSON
+                        console.log(response["info"]["participants"][0]["summonername"])
                         $("#historyContainer").text(JSON.stringify(response));
                     }
                 });
