@@ -17,11 +17,11 @@
 
                 // Get summoner name from the input field
                 var summonerName = $("input[name='summoner_name']").val();
-
+                
                 // Send an AJAX request to the backend
                 $.ajax({
                     type: "POST",
-                    url: "/nome",
+                    url: "/",
                     data: { summoner_name: summonerName },
                     success: function(response) {
                         // Update the history container with the received JSON

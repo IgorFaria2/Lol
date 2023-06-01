@@ -56,11 +56,13 @@ from Functions.Get_Image import *
 from Functions.Get_data import *
 from Functions.Get_history import History
 
+champion = "Udyr"
+imagem(champion)
 # Define Flask application
 app = Flask(__name__)
 
 # Route for the root URL ("/")
-@app.route("/nome", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
         summoner_name = request.form["summoner_name"]
