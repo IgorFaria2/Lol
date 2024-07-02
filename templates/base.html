@@ -4,8 +4,10 @@
     <h2>Nick BR1:</h2>
     <form action="/" method="POST">
         <input type="text" name="summoner_name" required>
+        <input type="text" name="tag" required>
         <input type="submit" value="Submit">
     </form>
+    <h2 id="teste"></h2>
 
     <div id="historyContainer"></div>
 
@@ -17,16 +19,17 @@
 
                 // Get summoner name from the input field
                 var summonerName = $("input[name='summoner_name']").val();
+                var tag = $("input[name='tag']").val();
                 
                 // Send an AJAX request to the backend
                 $.ajax({
                     type: "POST",
                     url: "/",
-                    data: { summoner_name: summonerName },
+                    data: { summoner_name: summonerName, tag: tag },
                     success: function(response) {
-                        // Update the history container with the received JSON
-                        console.log(response["info"]["participants"][0]["summonername"])
-                        $("#historyContainer").text(JSON.stringify(response));
+                        console.log(response);
+                        console.log(response["puuid"]);
+                        $("#teste").text(response["puuid"]);
                     }
                 });
             });
