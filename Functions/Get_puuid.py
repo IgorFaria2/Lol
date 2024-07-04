@@ -1,4 +1,5 @@
 import requests
+
 def data(summoner_name, var_BR1, var_Key, tag, var_americas):
     url = f"https://{var_americas}/riot/account/v1/accounts/by-riot-id/{summoner_name}/{tag}?api_key={var_Key}"
     response_data = requests.get(url)

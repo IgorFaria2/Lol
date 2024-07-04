@@ -41,3 +41,4 @@ def History(data_json, var_Key, count_history):
             print("Error in match ID", response_match_info.status_code)
 
     return matches
+

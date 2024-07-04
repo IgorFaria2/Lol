@@ -1,5 +1,57 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Fetch champion list and populate dropdown on page load
+            $.ajax({
+                type: "POST",
+                url: "/DD",
+                success: function(response) {
+                    console.log(response);
+                    const champList = response.champList;
+                    const $dropdown = $('#champion-select');
+                    champList.forEach(champ => {
+                        $dropdown.append(new Option(champ[0], champ[0]));
+                    });
+                }
+            });
+
+            // Handle form submission for summoner info
+            $("form[action='/']").submit(function(event) {
+                event.preventDefault();  // Prevent default form submission behavior
+                var summonerName = $("input[name='summoner_name']").val();
+                var tag = $("input[name='tag']").val();
+                var selectedChampion = $("#champion-select").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/",
+                    data: { summoner_name: summonerName, tag: tag, champion: selectedChampion },
+                    success: function(response) {
+                        console.log(response);
+                        $("#teste").text(response["puuid"]);
+                    }
+                });
+            });
+
+            // Handle dropdown change to fetch champion image
+            $("#champion-select").change(function() {
+                var selectedChampion = $(this).val();
+                $.ajax({
+                    type: "POST",
+                    url: "/image",
+                    data: { champion: selectedChampion },
+                    success: function(response) {
+                        console.log(response);
+                        $("#historyContainer").html('<img src="' + response.image + '" alt="Champion Image">');
+                    }
+                });
+            });
+        });
+    </script>
+</head>
 <body>
     <h2>Nick BR1:</h2>
     <form action="/" method="POST">
@@ -9,31 +61,14 @@
     </form>
     <h2 id="teste"></h2>
 
+    <!-- Form to select a champion -->
+    <form action="/image" method="POST">
+        <select id="champion-select" name="champion" required>
+            <option value="">Select a champion</option>
+        </select>
+    </form>
+
+    <!-- Container for champion image -->
     <div id="historyContainer"></div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $("form").submit(function(event) {
-                event.preventDefault();  // Prevent default form submission behavior
-
-                // Get summoner name from the input field
-                var summonerName = $("input[name='summoner_name']").val();
-                var tag = $("input[name='tag']").val();
-                
-                // Send an AJAX request to the backend
-                $.ajax({
-                    type: "POST",
-                    url: "/",
-                    data: { summoner_name: summonerName, tag: tag },
-                    success: function(response) {
-                        console.log(response);
-                        console.log(response["puuid"]);
-                        $("#teste").text(response["puuid"]);
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 </html>
