@@ -26,10 +26,10 @@ def ddragon():
     return render_template("base.html")
 
 @main_blueprints.route("/image", methods=["GET", "POST"])
-def image():  # Renamed from ddragon to image
+def image():
     if request.method == "POST":
         champion = request.form["champion"]
-        image = imagem(champion)
-        return jsonify({'champList': champion_names_and_ids})
+        image_url = imagem(champion)
+        return jsonify({'image': image_url})
 
     return render_template("base.html")
